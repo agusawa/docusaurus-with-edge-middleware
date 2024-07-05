@@ -1,25 +1,33 @@
 // import { jwtVerify } from "jose";
 
+import { NextRequest } from "next/server";
+
 const JWT_SECRET = process.env.JWT_SECRET!;
 
 export const config = {
   matcher: ["/"],
 };
 
-export default async function middleware(request) {
-  const paramToken = request.nextUrl.searchParams.get("token");
+export default async function middleware(request: NextRequest) {
+  const token = request.nextUrl.searchParams.get("token");
 
-  if (!paramToken) {
-    return Response.redirect(
-      `https://app.carops.net/login?redirectTo=${request.nextUrl}`
-    );
-  }
+  return new Response(`Hello, World! ${token}`);
 
-  if (paramToken !== "123") {
-    return Response.redirect(
-      `https://app.carops.net/login?redirectTo=${request.nextUrl}`
-    );
-  }
+  // const paramToken = request.nextUrl.searchParams.get("token");
+
+  // // request.
+
+  // if (!paramToken) {
+  //   return Response.redirect(
+  //     `https://app.carops.net/login?redirectTo=${request.nextUrl}`
+  //   );
+  // }
+
+  // if (paramToken !== "123") {
+  //   return Response.redirect(
+  //     `https://app.carops.net/login?redirectTo=${request.nextUrl}`
+  //   );
+  // }
 
   // const token = request.cookies.get(USER_TOKEN)?.value;
 
