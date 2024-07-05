@@ -8,7 +8,7 @@ export const config = {
   matcher: ["/"],
 };
 
-export async function middleware(request: NextRequest) {
+export default async function middleware(request: NextRequest) {
   return new Response(`${typeof request} ${JSON.stringify(request)}`);
 
   // const paramToken = request.nextUrl.searchParams.get("token");
