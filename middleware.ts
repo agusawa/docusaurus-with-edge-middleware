@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 const JWT_SECRET = process.env.JWT_SECRET!;
 
 export const config = {
-  matcher: ['/*'],
+  matcher: ['/'],
 }
 
 export default async function middleware(request: NextRequest) {
