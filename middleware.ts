@@ -38,6 +38,8 @@ export default async function middleware(request: NextRequest) {
       return NextResponse.next();
     }
   } catch (err) {}
+
+  return NextResponse.redirect(`https://app.carops.net/login?redirectTo=${request.nextUrl}`);
 }
 
 const USER_TOKEN = 'user-token';
