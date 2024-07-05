@@ -2,10 +2,6 @@
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
-export const config = {
-  matcher: ["/"],
-};
-
 export default async function middleware(request) {
   const url = new URL(request.url);
   const queryParams = url.searchParams;
@@ -13,7 +9,7 @@ export default async function middleware(request) {
   const token = queryParams.get('token');
 
   if (!token || token !== '123') {
-      return Response.redirect(
+    return Response.redirect(
       `https://app.carops.net/login?redirectTo=${request.nextUrl}`
     );
   }
