@@ -1,17 +1,43 @@
-export default function middleware(request) {
-    const basicAuth = request.headers.get('Authorization')
-    if (!basicAuth) {
-      return new Response('Access denied', {
-        status: 401,
-        headers: { 'WWW-Authenticate': 'Basic' },
-      })
+import { jwtVerify } from "jose";
+import { NextRequest, NextResponse } from "next/server";
+
+const JWT_SECRET = process.env.JWT_SECRET!;
+
+export const config = {
+  matcher: ['*'],
+}
+
+export default async function middleware(request: NextRequest) {
+  const token = request.cookies.get(USER_TOKEN)?.value;
+
+  try {
+    const isVerified = await jwtVerify(
+      token,
+      new TextEncoder().encode(JWT_SECRET)
+    );
+    if (isVerified) {
+      return NextResponse.next();
     }
-    const authValue = basicAuth.split(' ')[1]
-    if (authValue !== 'username:password') {
-      return new Response('Access denied', {
-        status: 401,
-        headers: { 'WWW-Authenticate': 'Basic' },
-      })
-    }
+  } catch (err) {}
+
+  const paramToken = request.nextUrl.searchParams.get('token');
+
+  if (!paramToken) {
+    return NextResponse.redirect(`https://app.carops.net/login?redirectTo=${request.nextUrl}`);
   }
-  
+
+  try {
+    const isVerified = await jwtVerify(
+      token,
+      new TextEncoder().encode(JWT_SECRET)
+    );
+    if (isVerified) {
+      request.cookies.set(USER_TOKEN, paramToken);
+      request.nextUrl.searchParams.delete('token');
+
+      return NextResponse.next();
+    }
+  } catch (err) {}
+}
+
+const USER_TOKEN = 'user-token';
