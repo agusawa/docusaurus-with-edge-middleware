@@ -9,9 +9,7 @@ export const config = {
 };
 
 export default async function middleware(request: NextRequest) {
-  const token = request.nextUrl.searchParams.get("token");
-
-  return new Response(`Hello, World! ${token}`);
+  return new Response(JSON.stringify(request));
 
   // const paramToken = request.nextUrl.searchParams.get("token");
 
