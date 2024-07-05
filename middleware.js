@@ -1,15 +1,13 @@
 // import { jwtVerify } from "jose";
 
-import { NextRequest } from "next/server";
-
-const JWT_SECRET = process.env.JWT_SECRET!;
+const JWT_SECRET = process.env.JWT_SECRET;
 
 export const config = {
   matcher: ["/"],
 };
 
-export async function middleware(request: NextRequest) {
-  return new Response(`${typeof request} ${JSON.stringify(request)}`);
+export default async function middleware(request) {
+  return new Response(`${typeof request} ${JSON.stringify(request)} ${request.url}`);
 
   // const paramToken = request.nextUrl.searchParams.get("token");
 

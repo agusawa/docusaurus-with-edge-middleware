@@ -1,9 +1,4 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
-  experimental: {
-    allowMiddlewareResponseBody: true
-  }
-}
+const nextConfig = {}
 
 module.exports = nextConfig;
