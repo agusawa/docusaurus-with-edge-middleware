@@ -1,23 +1,25 @@
 // import { jwtVerify } from "jose";
-import { NextRequest, NextResponse } from "next/server";
 
 const JWT_SECRET = process.env.JWT_SECRET!;
 
 export const config = {
-  matcher: ['/'],
-}
+  matcher: ["/"],
+};
 
-export default async function middleware(request: NextRequest) {
-  const paramToken = request.nextUrl.searchParams.get('token');
+export default async function middleware(request) {
+  const paramToken = request.nextUrl.searchParams.get("token");
 
   if (!paramToken) {
-    return NextResponse.redirect(`https://app.carops.net/login?redirectTo=${request.nextUrl}`);
+    return Response.redirect(
+      `https://app.carops.net/login?redirectTo=${request.nextUrl}`
+    );
   }
 
-  if (paramToken === '123') {
-    return NextResponse.next();
+  if (paramToken !== "123") {
+    return Response.redirect(
+      `https://app.carops.net/login?redirectTo=${request.nextUrl}`
+    );
   }
-
 
   // const token = request.cookies.get(USER_TOKEN)?.value;
 
