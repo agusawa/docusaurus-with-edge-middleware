@@ -7,7 +7,18 @@ export const config = {
 };
 
 export default async function middleware(request) {
-  return new Response(`${typeof request} ${JSON.stringify(request)} ${request.url}`);
+  const url = new URL(request.url);
+  const queryParams = url.searchParams;
+
+  const token = queryParams.get('token');
+
+  if (!token || token !== '123') {
+      return Response.redirect(
+      `https://app.carops.net/login?redirectTo=${request.nextUrl}`
+    );
+  }
+
+  // return new Response(`${typeof request} ${JSON.stringify(request)} ${request.url}`);
 
   // const paramToken = request.nextUrl.searchParams.get("token");
 
